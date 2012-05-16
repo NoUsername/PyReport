@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    
+    <xs:element name="alertBase">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="alert">
+                    <xs:complexType>
+                        <xs:attribute name="type"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="newSimpleType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="lessThan"/>
+            <xs:enumeration value="greaterThan"/>
+            <xs:enumeration value="delta"/>
+            <xs:enumeration value="equal"/>
+            <xs:enumeration value="notEqual"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
