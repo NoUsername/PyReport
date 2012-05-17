@@ -20,7 +20,7 @@ class SimpleMailer(object):
         
     def send(self, subject="", content="test content"):
         if (Config.ALERT_EMAIL_ADDRESS == 'yourname@gmail.com'):
-            print("ERROR: Won't send email notifications until you configure it!"+
+            print("ERROR: Won't send email notifications until you configure it! "+
             "Go to Config.py for this.")
             return False
         msg = MIMEText(content)

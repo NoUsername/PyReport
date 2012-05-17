@@ -15,8 +15,8 @@
 						</title>
 						<description>
 							Detailed report:
-							HD Usage: <xsl:value-of select="hdUsage"/><br/>
-							Memory Usage: <xsl:value-of select="memUsage"/><br/>
+							<xsl:for-each select="hdUsage">HD Usage: <xsl:value-of select="@current" /> / <xsl:value-of select="@total"/> =&gt; <xsl:value-of select="round(@current div @total * 100)"/>% <br/></xsl:for-each>
+              <xsl:for-each select="memUsage">Memory Usage: <xsl:value-of select="@current"/> / <xsl:value-of select="@total"/> =&gt; <xsl:value-of select="round(@current div @total * 100)"/>%<br/></xsl:for-each>
 							Processes: <xsl:value-of select="processCount"/><br/>
 						</description>
 						<guid><xsl:value-of select="@id"/></guid>

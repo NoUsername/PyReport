@@ -22,7 +22,7 @@ class Reporter(object):
     def __init__(self, path="../xml/reports.xml"):
         '''
         Constructor
-        a path can be specified, if not, the default path is used
+        a path for the report files can be specified, if not, the default path is used
         '''
         self.doc = None
         self.path = Util.GETPATH(path)
@@ -40,7 +40,7 @@ class Reporter(object):
         x = XmlTester(Util.GETPATH("../xsd"))
         ok = False
         if (os.path.exists(self.path)):
-            ok, doc, errors = x.checkIsReports(self.path)
+            ok, doc, errors = x.checkIsReports(self.path) #@UnusedVariable
             if not ok:
                 print("old file is invalid! " + str(errors))
         if ok:
@@ -90,14 +90,30 @@ class Reporter(object):
             if (item.tag == "other"):
                 otherItems = item
             else:
-                result[item.tag] = item.text
+                result[item.tag] = self.parseNode(item)
         
         if otherItems is not None:
             entries = otherItems.getchildren()
             for item in entries:
-                result[item.tag] = item.text
+                result[item.tag] = self.parseNode(item)
         
         return result
+    
+    def parseNode(self, node):
+        attribs = node.attrib
+        if len(attribs) > 0:
+            # create a dictionary with children
+            result = {}
+            for k, v in attribs.items():
+                if v.isdigit():
+                    v = int(v)
+                result[k] = v
+            return result
+        else:
+            # simply save the nodes content
+            if node.text.isdigit():
+                return int(node.text)
+            return node.text
         
     
     def save(self):
@@ -107,7 +123,7 @@ class Reporter(object):
             f.close()
             return True
         except:
-            print("error occured during save %s"%str(sys.exc_info()))
+            print("error occurred during save %s"%str(sys.exc_info()))
         
 
 if __name__ == '__main__':

@@ -11,6 +11,10 @@ def doCheck(oldVal, newVal):
     if oldVal is None:
         oldVal = newVal
     
+    # we get current and total values, we only need current here
+    oldVal = oldVal["current"]
+    newVal = newVal["current"]
+    
     if newVal > 2*oldVal:
         return "OH NO, MEMORY CONSUMPTION DOUBLED!"
     

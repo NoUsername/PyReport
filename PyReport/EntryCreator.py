@@ -19,6 +19,8 @@ class EntryCreator(object):
     '''
     
     REPORTER_METHODNAME = "doTest"
+    ID_CURRENT = "current"
+    ID_TOTAL = "total"
 
     def __init__(self):
         '''
@@ -29,7 +31,7 @@ class EntryCreator(object):
         
         
     def runDynamicReporters(self):
-        lst = os.listdir("./reporters")
+        lst = os.listdir(Util.GETPATH("./reporters"))
         loadme = []
         resDict = {}
         for entry in lst:
@@ -60,14 +62,17 @@ class EntryCreator(object):
         root.set("dateTime", timeStr)
         
         hd = SystemTest.getFreeSpace()
-        # write used space
-        root.hdUsage._setText(str(hd[0] - hd[1]))
+        # write used and total space
+        root.hdUsage.set(self.ID_CURRENT, str(hd[0] - hd[1]))
+        root.hdUsage.set(self.ID_TOTAL, str(hd[0]))
         
         procCount = SystemTest.getProcessCount()
         root.processCount._setText(str(procCount))
         
         mem = SystemTest.getMemUsage()
-        root.memUsage._setText(str(mem[0]-mem[1]))
+        # write used and total space
+        root.memUsage.set(self.ID_CURRENT, str(mem[0] - mem[1]))
+        root.memUsage.set(self.ID_TOTAL, str(mem[0]))
         
         resDict = self.runDynamicReporters()
         if (len(resDict) > 0):
@@ -79,7 +84,7 @@ class EntryCreator(object):
         self.reportXml = root
         self.report = etree.tostring(root, pretty_print=True)
         
-        print(self.report)        
+        #print(self.report)        
         
         
 if __name__=='__main__':

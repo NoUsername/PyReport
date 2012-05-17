@@ -23,10 +23,14 @@
 					Report of <xsl:value-of select="@dateTime"/>
 				</h1>
 				<pre>
-					Detailed report:
-					HD Usage:     <xsl:value-of select="hdUsage"/><br/>
-					Memory Usage: <xsl:value-of select="memUsage"/><br/>
-					Processes:    <xsl:value-of select="processCount"/><br/>
+Detailed report:
+<xsl:for-each select="hdUsage">
+HD Usage:     <xsl:value-of select="@current" /> / <xsl:value-of select="@total"/> =&gt; <xsl:value-of select="round(@current div @total * 100)"/>% <br/>
+</xsl:for-each>
+<xsl:for-each select="memUsage">
+Memory Usage: <xsl:value-of select="@current"/> / <xsl:value-of select="@total"/> =&gt; <xsl:value-of select="round(@current div @total * 100)"/>%<br/>
+</xsl:for-each>
+Processes:    <xsl:value-of select="processCount"/><br/>
 				</pre>
 				<a href="#top">GO TO TOP</a>
 		</xsl:for-each>
