@@ -15,26 +15,67 @@
 		<title>Reports, last:<xsl:value-of select="$latestDate" /></title>
 		</head>
 		<body>
-		<h1 id="top">Infos:</h1>
+		<h1 id="top">System reports of <xsl:value-of select="/report/systemInfo/@name" /></h1>
+    <!-- TOC: -->
+    <xsl:for-each select="//entry">
+      <!-- newest first -->
+      <xsl:sort select="position()" data-type="number" order="descending"/>
+      <a href="#{@id}" >
+      Report of <xsl:value-of select="@dateTime"/>
+      </a><br />
+    </xsl:for-each >
 		<hr/>
 		
 		<xsl:for-each select="//entry">
+      <!-- newest first -->
+      <xsl:sort select="position()" data-type="number" order="descending"/>
 			<h1 id="{@id}">
 					Report of <xsl:value-of select="@dateTime"/>
 				</h1>
-				<pre>
-Detailed report:
-<xsl:for-each select="hdUsage">
-HD Usage:     <xsl:value-of select="@current" /> / <xsl:value-of select="@total"/> =&gt; <xsl:value-of select="round(@current div @total * 100)"/>% <br/>
+				
+<pre><xsl:for-each select="hdUsage" >HD Usage:     <xsl:value-of select="@current" /> / <xsl:value-of select="@total"/> =&gt; <xsl:value-of select="round(@current div @total * 100)"/>%<br />
 </xsl:for-each>
-<xsl:for-each select="memUsage">
-Memory Usage: <xsl:value-of select="@current"/> / <xsl:value-of select="@total"/> =&gt; <xsl:value-of select="round(@current div @total * 100)"/>%<br/>
+<xsl:for-each select="memUsage"     >Memory Usage: <xsl:value-of select="@current"/> / <xsl:value-of select="@total"/> =&gt; <xsl:value-of select="round(@current div @total * 100)"/>%
+</xsl:for-each >Processes:    <xsl:value-of select="processCount" /><br />
+
+<!-- show the other items -->
+<xsl:for-each select="other"> 
+<xsl:for-each select="*">
+<!-- print the name -->
+<!-- if they contain text, print that, if they have attributes, show those -->
+<xsl:value-of select="name()"/>: <xsl:choose>
+<xsl:when test="string-length(.) &gt; 0">
+<xsl:value-of select="."/>
+<br />
+</xsl:when >
+<xsl:otherwise >
+<xsl:for-each select="@*">
+<xsl:value-of select="name()"/> = <xsl:value-of select="."/>
 </xsl:for-each>
-Processes:    <xsl:value-of select="processCount"/><br/>
+</xsl:otherwise >
+</xsl:choose>
+<br />
+</xsl:for-each>
+</xsl:for-each>
 				</pre>
-				<a href="#top">GO TO TOP</a>
+        <a href="#top">&#8593; back to top</a>
+        <br />
+        <br />
 		</xsl:for-each>
+<style>
+pre, code, kbd, samp { font-family: monospace, serif; _font-family: 'courier new', monospace; font-size: 1em; }
+pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; }
+html, button, input, select, textarea { font-family: sans-serif; color: #222; }
+body { margin: 1em; font-size: 1em; line-height: 1.4; }
+a {text-decoration: none; }
+</style>
+    
+    
 		</body>
 		</html>
     </xsl:template>
+    
+<xsl:template match="@*">
+<xsl:value-of select="name()"/> = <xsl:value-of select="."/><br/>
+</xsl:template>
 </xsl:stylesheet>

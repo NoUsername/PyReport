@@ -4,7 +4,7 @@ Created on 29.02.2012
 @author: Paul Klingelhuber - s1010455@students.fh-hagenberg.at
 '''
 
-import os, sys, time
+import os, sys, time, platform
 from XmlTester import XmlTester
 from EntryCreator import EntryCreator
 from lxml import objectify
@@ -31,12 +31,20 @@ class Reporter(object):
             os.makedirs(self.pathDir)        
         
     def createDefaultDoc(self):
+        '''
+        creates the default report document structure
+        '''
         E = objectify.ElementMaker(annotate=False) #@UndefinedVariable
-        root = E.report(E.systemInfo)
+        root = E.report(E.systemInfo(name=platform.node()) )
         
         return etree.ElementTree(root)
         
     def load(self):
+        '''
+        loads old reports from xml file
+        first checks via XSD if the old file is valid
+        if not, it is backed up and a new one is created
+        '''
         x = XmlTester(Util.GETPATH("../xsd"))
         ok = False
         if (os.path.exists(self.path)):
@@ -55,18 +63,25 @@ class Reporter(object):
         return ok
     
     def appendNewEntry(self):
+        '''
+        creates and appends a new entry node
+        '''
         c = EntryCreator()
         c.create()
         root = self.doc.getroot()
         if root is not None:
             root.append(c.reportXml)
-            #print(etree.tostring(self.doc, pretty_print=True))
             return True
         else:
             print("no root found!")
             return False
         
     def checkAlarms(self):
+        '''
+        runs all the alarm checkers
+        first gets the previous and current values in a 
+        simple dictionary format to pass to the Alarms class
+        '''
         root = self.doc.getroot()
         xmlValsOld = None
         if len(root.getchildren()) > 2:
@@ -80,6 +95,9 @@ class Reporter(object):
         checker.checkForAlarms()
         
     def getValuesFromXml(self, node):
+        '''
+        reads all the data from an "<entry ... />" node
+        '''
         if node is None:
             return None
         #print(node)
@@ -100,6 +118,11 @@ class Reporter(object):
         return result
     
     def parseNode(self, node):
+        '''
+        get data from node, either the text (contents)
+        or if it has attributes, a dictionary containing the attributes
+        if any of this data is a number, it will already be converted to a number
+        '''
         attribs = node.attrib
         if len(attribs) > 0:
             # create a dictionary with children
@@ -117,6 +140,9 @@ class Reporter(object):
         
     
     def save(self):
+        '''
+        saves the current data to the xml file
+        '''
         try:
             f = open(self.path, 'w')
             self.doc.write(f, xml_declaration=True, pretty_print=True)

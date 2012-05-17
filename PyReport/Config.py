@@ -23,6 +23,7 @@ RSS_AND_HTML_BASE_URL = "file:///" + COPY_RSS_AND_HTML_HERE.replace("\\", "/")
 # specify the email address and the password below
 # in the basic setup, you will receive an email from yourself
 #  NON-GMAIL: change settings accordingly further below
+ALERT_EMAIL_ENABLED = True
 ALERT_EMAIL_ADDRESS = "yourname@gmail.com"
 ALERT_EMAIL_ADDRESS_PASSWORD = "your_pw"
 

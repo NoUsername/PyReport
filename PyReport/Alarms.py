@@ -9,6 +9,7 @@ import Util
 import sys
 import traceback
 from SimpleMailer import SimpleMailer
+import Config
 
 
 class Alarms(object):
@@ -50,7 +51,7 @@ class Alarms(object):
         when it returns something, the string version of it will be inserted in the
         alarm log
         '''
-        lst = os.listdir("./alarm")
+        lst = os.listdir("./alarms")
         loadme = []
         resDict = {}
         for entry in lst:
@@ -59,7 +60,7 @@ class Alarms(object):
         for reporter in loadme:
             try:
                 modname = reporter[:-3]
-                name = "alarm." + modname
+                name = "alarms." + modname
                 mod = Util.simpleImport(name)
                 checkForAttr = getattr(mod, self.ALARM_CHECKFORNAME)
                 
@@ -85,7 +86,8 @@ class Alarms(object):
             return
         
         msg = "\n".join(self.messagesOnly())
-        SimpleMailer().send("ALARMS", msg)
+        if Config.ALERT_EMAIL_ENABLED:
+            SimpleMailer().send("ALARMS", msg)
         
     
     def messagesOnly(self):

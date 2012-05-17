@@ -79,7 +79,11 @@ class EntryCreator(object):
             root.other = E.entry()
             for key, val in resDict.items():
                 elem = etree.SubElement(root.other, key)
-                elem._setText(val)
+                if type(val) is dict:
+                    for k, v in val.items():
+                        elem.set(k, str(v))
+                else:
+                    elem._setText(val)
         
         self.reportXml = root
         self.report = etree.tostring(root, pretty_print=True)
