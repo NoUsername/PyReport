@@ -28,7 +28,7 @@ def GETPATH(somepath):
         return somepath
     
     if not MAIN_FOLDER:
-        print("WARNING: MAIN_FOLDER not configured!")
+        #print("WARNING: MAIN_FOLDER not configured!")
         MAIN_FOLDER = os.getcwd()
     
     if os.path.isabs(somepath):

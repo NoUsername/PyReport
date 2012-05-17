@@ -46,7 +46,6 @@
 <xsl:value-of select="name()"/>: <xsl:choose>
 <xsl:when test="string-length(.) &gt; 0">
 <xsl:value-of select="."/>
-<br />
 </xsl:when >
 <xsl:otherwise >
 <xsl:for-each select="@*">
