@@ -5,6 +5,7 @@ Created on Apr 2, 2012
 '''
 
 import os
+import re
 
 def simpleImport(name):
     mod = __import__(name)
@@ -12,6 +13,14 @@ def simpleImport(name):
     for comp in components[1:]:
         mod = getattr(mod, comp)
     return mod
+
+def getCleanXmlNodeName(name):
+    '''
+    gets a name that can safely be used for an xml node-name
+    removes spaces, etc
+    '''
+    rx = re.compile('\W+')
+    return rx.sub('_', name).strip()
 
 # this gets configured automaticaly, don't touch!
 MAIN_FOLDER = ""

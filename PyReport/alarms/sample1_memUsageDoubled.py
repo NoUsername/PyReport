@@ -16,7 +16,7 @@ def doCheck(oldVal, newVal):
     newVal = newVal["current"]
     
     if newVal > 2*oldVal:
-        return "OH NO, MEMORY CONSUMPTION DOUBLED!"
+        return "Memory consumption has at least doubled!"
     
     # if there is nothing wrong with the value, simply don't return anything!
     

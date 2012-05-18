@@ -10,6 +10,7 @@
             </xsl:if>
           </xsl:for-each>
 	</xsl:variable>
+  <xsl:variable name="alarmText" select="'&#160;&#160;ALARM:&#160;'" />
 		<html>
 		<head>
 		<title>Reports, last:<xsl:value-of select="$latestDate" /></title>
@@ -34,9 +35,23 @@
 				</h1>
 				
 <pre><xsl:for-each select="hdUsage" >HD Usage:     <xsl:value-of select="@current" /> / <xsl:value-of select="@total"/> =&gt; <xsl:value-of select="round(@current div @total * 100)"/>%<br />
+<!--<xsl:variable name="currentItem" select="local-name()" />-->
+<xsl:for-each select="../alarms/*[local-name(current()) = local-name(.)]" >
+<span style="color: red;"><xsl:value-of select="concat($alarmText, .)" /></span><br />
+</xsl:for-each >
 </xsl:for-each>
 <xsl:for-each select="memUsage"     >Memory Usage: <xsl:value-of select="@current"/> / <xsl:value-of select="@total"/> =&gt; <xsl:value-of select="round(@current div @total * 100)"/>%
+<!-- alarms -->
+<xsl:for-each select="../alarms/*[local-name(current()) = local-name(.)]" >
+<span style="color: red;"><xsl:value-of select="concat($alarmText, .)" /></span><br />
+</xsl:for-each >
+<!-- /alarms -->
 </xsl:for-each >Processes:    <xsl:value-of select="processCount" /><br />
+<!-- alarms -->
+<xsl:for-each select="./alarms/*[local-name(.)='processCount']" >
+<span style="color: red;"><xsl:value-of select="concat($alarmText, .)" /></span><br />
+</xsl:for-each >
+<!-- /alarms -->
 
 <!-- show the other items -->
 <xsl:for-each select="other"> 
@@ -48,13 +63,18 @@
 <xsl:value-of select="."/>
 </xsl:when >
 <xsl:otherwise >
-<xsl:for-each select="@*">
-<xsl:value-of select="name()"/> = <xsl:value-of select="."/>
+<xsl:for-each select="@*"> <!-- loop all attributes, xsl:text used to force a space after each entry -->
+<xsl:value-of select="name()"/> = <xsl:value-of select="."/><xsl:text> </xsl:text> 
 </xsl:for-each>
 </xsl:otherwise >
 </xsl:choose>
 <br />
-</xsl:for-each>
+<!-- alarms -->
+<xsl:for-each select="../../alarms/*[local-name(current()) = local-name(.)]" >
+<span style="color: red;"><xsl:value-of select="concat($alarmText, .)" /></span><br />
+</xsl:for-each >
+<!-- /alarms -->
+</xsl:for-each> <!-- /all alarm items -->
 </xsl:for-each>
 				</pre>
         <a href="#top">&#8593; back to top</a>

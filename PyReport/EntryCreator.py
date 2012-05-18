@@ -54,7 +54,7 @@ class EntryCreator(object):
         
     def create(self):
         E = objectify.ElementMaker(annotate=False) #@UndefinedVariable
-        root = E.entry(E.hdUsage, E.memUsage, E.processCount)
+        root = E.entry(E.hdUsage, E.memUsage, E.processCount, E.other, E.alarms)
         root.set("id", "e_" + str(uuid.uuid4()))
                 
         tuple_time = time.gmtime()
@@ -76,14 +76,15 @@ class EntryCreator(object):
         
         resDict = self.runDynamicReporters()
         if (len(resDict) > 0):
-            root.other = E.entry()
+            #root.other = E.entry()
             for key, val in resDict.items():
+                key = Util.getCleanXmlNodeName(key)
                 elem = etree.SubElement(root.other, key)
                 if type(val) is dict:
                     for k, v in val.items():
                         elem.set(k, str(v))
                 else:
-                    elem._setText(val)
+                    elem._setText(str(val))
         
         self.reportXml = root
         self.report = etree.tostring(root, pretty_print=True)

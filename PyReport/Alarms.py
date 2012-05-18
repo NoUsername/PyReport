@@ -51,7 +51,7 @@ class Alarms(object):
         when it returns something, the string version of it will be inserted in the
         alarm log
         '''
-        lst = os.listdir("./alarms")
+        lst = os.listdir(Util.GETPATH("./alarms"))
         loadme = []
         resDict = {}
         for entry in lst:

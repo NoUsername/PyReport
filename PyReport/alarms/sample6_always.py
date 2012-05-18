@@ -9,5 +9,5 @@ CHECK_FOR = "cpuTimes"
 def doCheck(oldVal, newVal):
     pass
     # un-comment next line to always trigger an error (not recommended)    
-    #return "Cpu related test alarm."
+    #return "Another CPU related alarm."
     

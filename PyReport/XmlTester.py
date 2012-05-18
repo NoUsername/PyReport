@@ -22,10 +22,10 @@ class XmlTester(object):
         
         loadXsdFrom = Util.GETPATH(loadXsdFrom)
         
-        alertsFile = open(os.path.join(loadXsdFrom, "alerts.xsd"))
-        xmlschema_doc = etree.parse(alertsFile)
-        alertsFile.close()
-        self.alertsXsd = etree.XMLSchema(xmlschema_doc)
+        #alertsFile = open(os.path.join(loadXsdFrom, "alerts.xsd"))
+        #xmlschema_doc = etree.parse(alertsFile)
+        #alertsFile.close()
+        #self.alertsXsd = etree.XMLSchema(xmlschema_doc)
         
         reportFile = open(os.path.join(loadXsdFrom, "report.xsd"))
         xmlschema_doc = etree.parse(reportFile)

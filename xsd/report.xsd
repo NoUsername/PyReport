@@ -26,7 +26,23 @@
                                     </xs:complexType>
                                 </xs:element>
                                 <xs:element name="processCount"/>
-                                <xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+
+                                <xs:element name="other">
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:any minOccurs="0" maxOccurs="unbounded"
+                                                processContents="skip"/>
+                                        </xs:sequence>
+                                    </xs:complexType>
+                                </xs:element>
+                                <xs:element name="alarms">
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:any minOccurs="0" maxOccurs="unbounded"
+                                                processContents="skip"/>
+                                        </xs:sequence>
+                                    </xs:complexType>
+                                </xs:element>
                             </xs:sequence>
                             <xs:attribute name="dateTime" type="xs:dateTime"/>
                             <xs:attribute name="id" type="xs:ID"/>

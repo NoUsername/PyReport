@@ -94,6 +94,10 @@ class Reporter(object):
         checker = Alarms(oldValues, newValues)
         checker.checkForAlarms()
         
+        for alarm in checker.alarms:
+            node = etree.SubElement(xmlValsNew.alarms, alarm[0])
+            node._setText(alarm[1])
+        
     def getValuesFromXml(self, node):
         '''
         reads all the data from an "<entry ... />" node
@@ -107,7 +111,7 @@ class Reporter(object):
         for item in entries:
             if (item.tag == "other"):
                 otherItems = item
-            else:
+            elif item.tag != 'alarms':
                 result[item.tag] = self.parseNode(item)
         
         if otherItems is not None:
