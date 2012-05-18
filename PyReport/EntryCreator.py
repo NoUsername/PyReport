@@ -57,7 +57,7 @@ class EntryCreator(object):
         root = E.entry(E.hdUsage, E.memUsage, E.processCount, E.other, E.alarms)
         root.set("id", "e_" + str(uuid.uuid4()))
                 
-        tuple_time = time.gmtime()
+        tuple_time = time.localtime()
         timeStr = time.strftime("%Y-%m-%dT%H:%M:%S", tuple_time)
         root.set("dateTime", timeStr)
         

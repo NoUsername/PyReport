@@ -36,22 +36,26 @@
 				
 <pre><xsl:for-each select="hdUsage" >HD Usage:     <xsl:value-of select="@current" /> / <xsl:value-of select="@total"/> =&gt; <xsl:value-of select="round(@current div @total * 100)"/>%<br />
 <!--<xsl:variable name="currentItem" select="local-name()" />-->
+<!-- alarms -->
 <xsl:for-each select="../alarms/*[local-name(current()) = local-name(.)]" >
-<span style="color: red;"><xsl:value-of select="concat($alarmText, .)" /></span><br />
+<span class="r"><xsl:value-of select="concat($alarmText, .)" /></span><br />
 </xsl:for-each >
+<!-- /alarms -->
 </xsl:for-each>
 <xsl:for-each select="memUsage"     >Memory Usage: <xsl:value-of select="@current"/> / <xsl:value-of select="@total"/> =&gt; <xsl:value-of select="round(@current div @total * 100)"/>%
 <!-- alarms -->
 <xsl:for-each select="../alarms/*[local-name(current()) = local-name(.)]" >
-<span style="color: red;"><xsl:value-of select="concat($alarmText, .)" /></span><br />
+<span class="r"><xsl:value-of select="concat($alarmText, .)" /></span><br />
 </xsl:for-each >
 <!-- /alarms -->
-</xsl:for-each >Processes:    <xsl:value-of select="processCount" /><br />
+</xsl:for-each >
+<xsl:for-each select="processCount" >Processes:    <xsl:value-of select="." /><br />
 <!-- alarms -->
-<xsl:for-each select="./alarms/*[local-name(.)='processCount']" >
-<span style="color: red;"><xsl:value-of select="concat($alarmText, .)" /></span><br />
+<xsl:for-each select="../alarms/*[local-name(current()) = local-name(.)]" >
+<span class="r"><xsl:value-of select="concat($alarmText, .)" /></span><br />
 </xsl:for-each >
 <!-- /alarms -->
+</xsl:for-each >
 
 <!-- show the other items -->
 <xsl:for-each select="other"> 
@@ -64,14 +68,14 @@
 </xsl:when >
 <xsl:otherwise >
 <xsl:for-each select="@*"> <!-- loop all attributes, xsl:text used to force a space after each entry -->
-<xsl:value-of select="name()"/> = <xsl:value-of select="."/><xsl:text> </xsl:text> 
+<xsl:value-of select="name()"/> = <xsl:value-of select="."/><xsl:text>&#32;</xsl:text>
 </xsl:for-each>
 </xsl:otherwise >
 </xsl:choose>
 <br />
 <!-- alarms -->
 <xsl:for-each select="../../alarms/*[local-name(current()) = local-name(.)]" >
-<span style="color: red;"><xsl:value-of select="concat($alarmText, .)" /></span><br />
+<span class="r"><xsl:value-of select="concat($alarmText, .)" /></span><br />
 </xsl:for-each >
 <!-- /alarms -->
 </xsl:for-each> <!-- /all alarm items -->
@@ -81,14 +85,17 @@
         <br />
         <br />
 		</xsl:for-each>
+    
+    <div class="s">Generated with PyReport &#169; 2012 by Paul Klingelhuber</div>
 <style>
 pre, code, kbd, samp { font-family: monospace, serif; _font-family: 'courier new', monospace; font-size: 1em; }
 pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; }
 html, button, input, select, textarea { font-family: sans-serif; color: #222; }
 body { margin: 1em; font-size: 1em; line-height: 1.4; }
 a {text-decoration: none; }
+.r {color: red; }
+.s {color: grey; font-size: small; text-align:center; width: 100%}
 </style>
-    
     
 		</body>
 		</html>

@@ -13,6 +13,8 @@ import os
 # COPY_RSS_AND_HTML_HERE = "/var/www/reporter/"
 ## lastly specify the base url for the links inside the html report
 # RSS_AND_HTML_BASE_URL = "http://www.yourserver.com/reporter/"
+## This is an example BASE_URL if you use the Dropbox public folder
+# RSS_AND_HTML_BASE_URL = "http://dl.dropbox.com/u/0000000/"
 
 COPY_RSS_AND_HTML_HERE = os.path.join(os.getenv('USERPROFILE') or os.getenv('HOME'), "Dropbox/Public/PyReport")
 RSS_AND_HTML_BASE_URL = "file:///" + COPY_RSS_AND_HTML_HERE.replace("\\", "/")
