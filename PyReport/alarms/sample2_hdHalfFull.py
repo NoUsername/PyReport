@@ -11,7 +11,7 @@ def doCheck(oldVal, newVal):
     current = newVal["current"]
     total = newVal["total"]
     if current > total/2:
-        return "OH NO, The hard drive is more than half full!"
+        return "HD is more than half full!"
     
     # if there is nothing wrong with the value, simply don't return anything!
     
