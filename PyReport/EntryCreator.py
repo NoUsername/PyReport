@@ -44,7 +44,7 @@ class EntryCreator(object):
                 mod = Util.simpleImport(name)
                 functionToCall = getattr(mod, self.REPORTER_METHODNAME)
                 result = functionToCall()
-                if len(result) != 2:
+                if result is None or len(result) != 2:
                     print("ignoring result of `%s` because no 2 element tuple was returned"%modname)
                 else:
                     resDict[result[0]] = result[1]
