@@ -88,11 +88,14 @@ class Reporter(object):
             xmlValsOld = root.getchildren()[-2]
         xmlValsNew = root.getchildren()[-1]
         
+        # first element is the systemInfo node
+        systemName = root.getchildren()[0].get("name")
+        
         oldValues = self.getValuesFromXml(xmlValsOld)
         newValues = self.getValuesFromXml(xmlValsNew)
         
         checker = Alarms(oldValues, newValues)
-        checker.checkForAlarms()
+        checker.checkForAlarms(systemName)
         
         for alarm in checker.alarms:
             node = etree.SubElement(xmlValsNew.alarms, alarm[0])

@@ -81,13 +81,15 @@ class Alarms(object):
                 print(traceback.format_exc())
         return resDict
     
-    def __reportAlarms(self):
+    def __reportAlarms(self, systemName):
         if len(self.alarms) < 1:
             return
         
-        msg = "\n".join(self.messagesOnly())
+        msg = '\n'.join(self.messagesOnly())
+        title = 'ALARMS of ' + systemName
+        msg = title + '\n' + msg
         if Config.ALERT_EMAIL_ENABLED:
-            SimpleMailer().send("ALARMS", msg)
+            SimpleMailer().send(title, msg)
         
     
     def messagesOnly(self):
@@ -95,10 +97,10 @@ class Alarms(object):
             yield item[1]
         
     
-    def checkForAlarms(self):
+    def checkForAlarms(self, systemName):
         self.__runAlarmCheckers()
         try:
-            self.__reportAlarms()
+            self.__reportAlarms(systemName)
         except:
             print("Error reporting the alarms:" + str(sys.exc_info()))
             print(traceback.format_exc())
