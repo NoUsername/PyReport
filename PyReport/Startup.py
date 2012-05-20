@@ -35,6 +35,7 @@ if __name__ == '__main__':
     os.chdir(Util.MAIN_FOLDER)
     
     print("Starting...")
+    successfully = False
     
     try:
         from Reporter import Reporter
@@ -45,6 +46,7 @@ if __name__ == '__main__':
         if r.appendNewEntry():
             r.checkAlarms()
             if r.save():
+                successfully = True
                 if not Config.RSS_AND_HTML_BASE_URL:
                     print("RSS_AND_HTML_BASE_URL not configured in Config.py\nWon't do conversion to rss or html")
                 else:
@@ -61,6 +63,7 @@ if __name__ == '__main__':
         import traceback
         print(sys.exc_info()[0])
         print(traceback.format_exc())
+    print("Finished "+(successfully and "successfully" or "with errors"))
     
     
     # end

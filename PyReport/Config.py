@@ -17,7 +17,7 @@ import os
 # RSS_AND_HTML_BASE_URL = "http://dl.dropbox.com/u/0000000/"
 
 COPY_RSS_AND_HTML_HERE = os.path.join(os.getenv('USERPROFILE') or os.getenv('HOME'), "Dropbox/Public/PyReport")
-RSS_AND_HTML_BASE_URL = "file:///" + COPY_RSS_AND_HTML_HERE.replace("\\", "/")
+RSS_AND_HTML_BASE_URL = "file:///" + COPY_RSS_AND_HTML_HERE.replace("\\", "/") #@UnusedVariable
 
 
 # - EMAIL SETUP - 
@@ -27,8 +27,7 @@ RSS_AND_HTML_BASE_URL = "file:///" + COPY_RSS_AND_HTML_HERE.replace("\\", "/")
 #  NON-GMAIL: change settings accordingly further below
 ALERT_EMAIL_ENABLED = True
 ALERT_EMAIL_ADDRESS = "yourname@gmail.com"
-ALERT_EMAIL_ADDRESS_PASSWORD = "your_pw"
-
+ALERT_EMAIL_ADDRESS_PASSWORD = "your_pw" #@UnusedVariable
 
 
 # ANDVANCED EMAIL SETUP (for non-gmail setup)
@@ -37,3 +36,12 @@ ALERT_EMAIL_ADDRESS_FROM = ALERT_EMAIL_ADDRESS
 
 EMAIL_SERVER = "smtp.gmail.com:587"
 EMAIL_USE_TLS = True
+
+# try loading a cusotm local config
+try:
+    from ConfigLocal import *
+    
+    if ALERT_EMAIL_ADDRESS_FROM == "yourname@gmail.com":
+        ALERT_EMAIL_ADDRESS_FROM = ALERT_EMAIL_ADDRESS
+except:
+    pass

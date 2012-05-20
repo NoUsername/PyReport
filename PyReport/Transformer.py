@@ -1,5 +1,5 @@
 '''
-Created on 29.02.2012
+Created on 29.03.2012
 
 @author: Paul Klingelhuber - s1010455@students.fh-hagenberg.at
 '''
@@ -31,6 +31,9 @@ class Transformer(object):
         self.htmlTransform = etree.XSLT(xslDoc)
     
     def makeTransformations(self, fromDoc="../xml/reports.xml", baseURL=""):
+        '''
+        Transforms the reports xml document into the HTML and RSS files
+        '''
         if not baseURL:
             baseURL = "'http://localhost/'"
         else:
