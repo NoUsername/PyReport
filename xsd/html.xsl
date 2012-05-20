@@ -35,7 +35,6 @@
 				</h1>
 				
 <pre><xsl:for-each select="hdUsage" >HD Usage:     <xsl:value-of select="@current" /> / <xsl:value-of select="@total"/> =&gt; <xsl:value-of select="round(@current div @total * 100)"/>%<br />
-<!--<xsl:variable name="currentItem" select="local-name()" />-->
 <!-- alarms -->
 <xsl:for-each select="../alarms/*[local-name(current()) = local-name(.)]" >
 <span class="r"><xsl:value-of select="concat($alarmText, .)" /></span><br />

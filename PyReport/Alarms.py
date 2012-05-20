@@ -97,7 +97,11 @@ class Alarms(object):
     
     def checkForAlarms(self):
         self.__runAlarmCheckers()
-        self.__reportAlarms()
+        try:
+            self.__reportAlarms()
+        except:
+            print("Error reporting the alarms:" + str(sys.exc_info()))
+            print(traceback.format_exc())
         
         
 if __name__=='__main__':
