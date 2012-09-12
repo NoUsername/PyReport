@@ -15,10 +15,15 @@ class SimpleMailer(object):
     def __init__(self):
         '''
         Constructor
+        currently does nothing
         '''
         pass
         
     def send(self, subject="", content="test content"):
+        '''
+        send an email with a given subject and content from/to the email address configured
+        in the Config file
+        '''
         if (Config.ALERT_EMAIL_ADDRESS == 'yourname@gmail.com'):
             print("ERROR: Won't send email notifications until you configure it! "+
             "Go to Config.py for this.")

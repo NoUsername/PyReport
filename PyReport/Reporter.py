@@ -17,6 +17,12 @@ class Reporter(object):
     Reporter class handles the reports.xml file.
     It reads it and writes new values to it.
     
+    When using this class, follow this sequence of actions:
+      reporter.load()
+      if reporter.appendNewEntry():
+        reporter.save()
+        reporter.checkAlarms()
+    
     '''
 
     def __init__(self, path="../xml/reports.xml"):
@@ -24,8 +30,11 @@ class Reporter(object):
         Constructor
         a path for the report files can be specified, if not, the default path is used
         '''
+        ## this will contain the document object
         self.doc = None
+        ## path to the file
         self.path = Util.GETPATH(path)
+        ## path to the directory containing the file
         self.pathDir = os.path.split(self.path)[0]
         if not os.path.exists(self.pathDir):
             os.makedirs(self.pathDir)        
@@ -158,12 +167,5 @@ class Reporter(object):
         except:
             print("error occurred during save %s"%str(sys.exc_info()))
         
-
-if __name__ == '__main__':
-    blub = Reporter()
-    if blub.load():
-        if blub.appendNewEntry():
-            blub.save()
-            blub.checkAlarms()
         
         

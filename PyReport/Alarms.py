@@ -11,14 +11,20 @@ import traceback
 from SimpleMailer import SimpleMailer
 import Config
 
-
 class Alarms(object):
     '''
+    The Alarms class is responsible for discovering and running the alarm trigger checkers
     contains the alarm checking code
     '''
     
+    ## this is the name of the variable which alarm trigger checkers have to include \n
+    ## e.g.: \n
+    ##    CHECK_FOR = "cpuTimes"  \n
+    ## this has to be at the root level of an alarm trigger file
     ALARM_CHECKFORNAME = "CHECK_FOR"
     
+    ## the function name for the checking function \n
+    ## e.g.: 
     ALARM_METHODNAME = "doCheck"
 
 
@@ -35,8 +41,11 @@ class Alarms(object):
         if newValues is None:
             newValues = {}
         
+        ## a dictionary of all the old values
         self.oldValues = oldValues
+        ## dictionary of all the new (current) values
         self.newValues = newValues
+        ## all alarms that were triggered
         self.alarms = []
         
     def __runAlarmCheckers(self):
@@ -82,6 +91,9 @@ class Alarms(object):
         return resDict
     
     def __reportAlarms(self, systemName):
+        '''
+        if there are alarms, this will trigger the mail sending
+        '''
         if len(self.alarms) < 1:
             return
         
@@ -98,6 +110,9 @@ class Alarms(object):
         
     
     def checkForAlarms(self, systemName):
+        '''
+        call this from external code to trigger the alarm checking
+        '''
         self.__runAlarmCheckers()
         try:
             self.__reportAlarms(systemName)
@@ -106,8 +121,3 @@ class Alarms(object):
             print(traceback.format_exc())
         
         
-if __name__=='__main__':
-    testVals1 = {"memUsage" : 100}
-    testVals2 = {"memUsage" : 210, "hdUsage" : 1}
-    x = Alarms(testVals1, testVals2)
-    x.checkForAlarms()

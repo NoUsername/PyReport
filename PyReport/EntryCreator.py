@@ -15,10 +15,13 @@ import Util
 
 class EntryCreator(object):
     '''
-    creates a report entry
+    This class is responsible for creating new entries in the report XML
+    It is also responsible for discovering and executing custom reporters
     '''
     
+    ## name of function which valid reporters must expose
     REPORTER_METHODNAME = "doTest"
+    
     ID_CURRENT = "current"
     ID_TOTAL = "total"
 
@@ -26,11 +29,16 @@ class EntryCreator(object):
         '''
         Constructor
         '''
+        ## will contain the new report item serialized to a string
         self.report = ""
+        ## will contain the actual new report xml objects 
         self.reportXml = None
         
         
-    def runDynamicReporters(self):
+    def __runDynamicReporters(self):
+        '''
+        this discovers and executes the dynamic reporters
+        '''
         lst = os.listdir(Util.GETPATH("./reporters"))
         loadme = []
         resDict = {}
@@ -53,6 +61,11 @@ class EntryCreator(object):
         return resDict
         
     def create(self):
+        '''
+        call this function from external code to execute the generation of the new report values.
+        it will set the reportXml and report attributes of this object, where reportXml holds the actual
+        xml structure, and report contains this structure serialized to a string
+        '''
         E = objectify.ElementMaker(annotate=False) #@UndefinedVariable
         root = E.entry(E.hdUsage, E.memUsage, E.processCount, E.other, E.alarms)
         root.set("id", "e_" + str(uuid.uuid4()))
@@ -74,7 +87,7 @@ class EntryCreator(object):
         root.memUsage.set(self.ID_CURRENT, str(mem[0] - mem[1]))
         root.memUsage.set(self.ID_TOTAL, str(mem[0]))
         
-        resDict = self.runDynamicReporters()
+        resDict = self.__runDynamicReporters()
         if (len(resDict) > 0):
             #root.other = E.entry()
             for key, val in resDict.items():
@@ -91,7 +104,3 @@ class EntryCreator(object):
         
         #print(self.report)        
         
-        
-if __name__=='__main__':
-    x = EntryCreator()
-    x.create()

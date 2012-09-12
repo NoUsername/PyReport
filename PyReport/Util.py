@@ -8,6 +8,11 @@ import os
 import re
 
 def simpleImport(name):
+    '''
+    try to import a python file by name and returning the
+    instantiated "object" (not dealing with real classes here)
+    On this object you can call functions that are defined in the file
+    '''
     mod = __import__(name)
     components = name.split('.')
     for comp in components[1:]:

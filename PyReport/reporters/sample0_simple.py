@@ -7,4 +7,7 @@ Created on 28.02.2012
 import os
 
 def doTest():
+    '''
+    this simple reporter just returns the operating system's name
+    '''
     return ("osName", os.name)

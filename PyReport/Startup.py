@@ -1,4 +1,18 @@
+# doxygen (using doxypy)
 '''
+\mainpage Welcome to PyReport doxygen documentation.
+Please continue with the <a href="annotated.html">Class List</a>.<br/>
+Thank you!<br/>
+<br/>
+<br/>
+<span style="font-size:x-small">Created 2012, by Paul Klingelhuber. FH Hagenberg</span>
+'''
+
+
+'''
+\namespace Startup 
+This is the main entry point to PyReport, execute this file to launch it.
+
 Created on April 05, 2012
 
 @author: Paul Klingelhuber - s1010455@students.fh-hagenberg.at
@@ -7,6 +21,7 @@ Created on April 05, 2012
 import sys, os
 import Config
 import Util
+
 
 if __name__ == '__main__':
     # check if all necessary libs are here:

@@ -1,4 +1,7 @@
 '''
+
+A little helper class for getting the data we care about out of psutil
+
 Created on April 07, 2012
 
 @author: Paul Klingelhuber - s1010455@students.fh-hagenberg.at

@@ -11,16 +11,20 @@ import Util
 
 class Transformer(object):
     '''
-    classdocs
+    Transforms XML report file into HTML and RSS files
     '''
 
     def __init__(self, loadFrom="../xsd", output="../xml/feed.xml", outputHtml="../xml/items.html", copyToDir=None):
         '''
         Constructor
+        via the parameteres, you can configure several file paths (source, destination files)
         '''
+        ## where the html & rss file will be copied to
         self.targetDir = Util.GETPATH(copyToDir)
+        ## where the html & rss files will be created
         self.targetPath = Util.GETPATH(output)
         self.targetPathHtml = Util.GETPATH(outputHtml)
+        ## transformation object for rss
         self.rssTransform = None
         p = os.path.join(Util.GETPATH(loadFrom), "rss.xsl")
         xslDoc = etree.parse(p)
@@ -28,6 +32,7 @@ class Transformer(object):
         
         p = os.path.join(Util.GETPATH(loadFrom), "html.xsl")
         xslDoc = etree.parse(p)
+        ## transformation object for html
         self.htmlTransform = etree.XSLT(xslDoc)
     
     def makeTransformations(self, fromDoc="../xml/reports.xml", baseURL=""):
@@ -58,9 +63,9 @@ class Transformer(object):
             fileName = os.path.split(self.targetPathHtml)[1]
             shutil.copy2(self.targetPathHtml, os.path.join(self.targetDir, fileName))
     
-if __name__ == "__main__":
-    dirPath = os.path.join(os.getenv('USERPROFILE') or os.getenv('HOME'), "Dropbox/Public/PyReport")
-    x = Transformer(copyToDir=dirPath)
-    dropBoxId = "1526874"
-    x.makeTransformations(baseURL="http://dl.dropbox.com/u/"+dropBoxId+"/PyReport/")
+#if __name__ == "__main__":
+#    dirPath = os.path.join(os.getenv('USERPROFILE') or os.getenv('HOME'), "Dropbox/Public/PyReport")
+#    x = Transformer(copyToDir=dirPath)
+#    dropBoxId = "1526874"
+#    x.makeTransformations(baseURL="http://dl.dropbox.com/u/"+dropBoxId+"/PyReport/")
     
