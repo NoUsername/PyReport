@@ -11,7 +11,8 @@ def doCheck(oldVal, newVal):
     current = newVal["current"]
     total = newVal["total"]
     if current > total/2:
-        return "HD is more than half full!"
+        percent = long(current/float(max(1,total))*100)
+        return "HD is more than half full! (%s%%)"%percent
     
     # if there is nothing wrong with the value, simply don't return anything!
     
