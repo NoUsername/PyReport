@@ -28,8 +28,12 @@ def getMemUsage():
     """
     returns total, free
     """
-    data = psutil.phymem_usage()
-    return data[0], data[2]
+    if hasattr(psutil, 'phymem_usage'):
+        data = psutil.phymem_usage()
+        return data[0], data[2]
+    data = psutil.virtual_memory()
+    return data.total, data.free
+
 
 def getProcessCount():
     """
